@@ -1,5 +1,4 @@
-
-export const triviaAdvanced = [
+ const triviaAdvanced = [
   { question: "シュレディンガーの猫の思考実験で用いられる動物は？", choices: ["猫", "犬", "ネズミ", "ウサギ"], answer: "猫" },
   { question: "相対性理論を提唱したのは？", choices: ["アインシュタイン", "ニュートン", "ガリレオ", "ホーキング"], answer: "アインシュタイン" },
   { question: "光の速度はおおよそ毎秒何km？", choices: ["30万km", "15万km", "10万km", "50万km"], answer: "30万km" },
@@ -23,3 +22,4 @@ export const triviaAdvanced = [
   // …続けて上級レベルの雑学問題をバリエーション豊かに50問まで追加
   // （省略した部分も埋めて納品します）
 ];
+export default triviaAdvanced;

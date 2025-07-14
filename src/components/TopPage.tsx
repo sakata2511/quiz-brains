@@ -11,8 +11,8 @@ export default function TopPage({ onStart }: Props) {
 
   const genres = [
     { label: "雑学", value: "trivia" },
-    { label: "論理", value: "logic" },
-    { label: "文学", value: "literature" },
+    { label: "漫画・アニメ", value: "manga" },
+    { label: "世界史", value: "worldhistory" },
   ];
 
   const difficulties = [
@@ -25,9 +25,19 @@ export default function TopPage({ onStart }: Props) {
     bgmRef.current = new Audio("/sounds/top-bgm.mp3");
     bgmRef.current.loop = true;
     bgmRef.current.volume = 0.4;
+
+    // 再生開始
     bgmRef.current.play().catch(() => {
-      console.warn("BGM 自動再生はユーザー操作後に開始されます。");
+      console.warn("BGMはユーザー操作後に開始されます");
     });
+
+    // クリーンアップ: TopPageがアンマウントされたら停止
+    return () => {
+      if (bgmRef.current) {
+        bgmRef.current.pause();
+        bgmRef.current.currentTime = 0;
+      }
+    };
   }, []);
 
   const handleStart = () => {

@@ -1,4 +1,4 @@
-export const triviaBeginner = [
+const triviaBeginner = [
   { question: "日本で一番高い山は？", choices: ["富士山", "北岳", "槍ヶ岳", "穂高岳"], answer: "富士山" },
   { question: "日本で一番長い川は？", choices: ["信濃川", "利根川", "淀川", "天竜川"], answer: "信濃川" },
   { question: "日本で一番大きな湖は？", choices: ["琵琶湖", "霞ヶ浦", "洞爺湖", "猪苗代湖"], answer: "琵琶湖" },
@@ -48,3 +48,4 @@ export const triviaBeginner = [
   { question: "世界三大宗教に含まれないのは？", choices: ["ヒンドゥー教", "仏教", "キリスト教", "神道"], answer: "神道" },
   { question: "アフリカのナイル川の長さは約何km？", choices: ["6650km", "5000km", "7000km", "8000km"], answer: "6650km" },
 ];
+export default triviaBeginner;

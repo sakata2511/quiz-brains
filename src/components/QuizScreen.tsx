@@ -155,7 +155,7 @@ export default function QuizScreen({ genre, level, onFinish }: Props) {
       )}
 
       <div className="text-lg text-gray-700 mb-2">
-        {current + 1} / {questions.length} — ジャンル: {genre} / 難易度: {level}
+        {current + 1} / {questions.length}
       </div>
 
       <h2 className="text-2xl font-semibold text-blue-800 mb-6 text-center">

@@ -1,16 +1,16 @@
 // 📂 src/data/quizData.ts
 
-import { triviaBeginner } from "./trivia/beginner";
-import { triviaIntermediate } from "./trivia/intermediate";
-import { triviaAdvanced } from "./trivia/advanced";
+import triviaBeginner from "./trivia/beginner";
+import triviaIntermediate from "./trivia/intermediate";
+import triviaAdvanced from "./trivia/advanced";
 
-import { logicBeginner } from "./logic/beginner";
-import { logicIntermediate } from "./logic/intermediate";
-import { logicAdvanced } from "./logic/advanced";
+import mangaBeginner from "./manga/beginner";
+import mangaIntermediate from "./manga/intermediate";
+import mangaAdvanced from "./manga/advanced";
 
-import { literatureBeginner } from "./literature/beginner";
-import { literatureIntermediate } from "./literature/intermediate";
-import { literatureAdvanced } from "./literature/advanced";
+import worldhistoryBeginner from "./worldhistory/beginner";
+import worldhistoryIntermediate from "./worldhistory/intermediate";
+import worldhistoryAdvanced from "./worldhistory/advanced";
 
 type Question = {
   question: string;
@@ -18,7 +18,7 @@ type Question = {
   answer: string;
 };
 
-// 配列シャッフル関数
+// 配列をシャッフルする関数
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -28,7 +28,7 @@ function shuffleArray<T>(array: T[]): T[] {
   return arr;
 }
 
-// 問題の選択肢をシャッフル
+// 問題の選択肢をシャッフルして返す
 function prepareQuestions(raw: Question[]): Question[] {
   return raw.map(q => ({
     ...q,
@@ -47,15 +47,15 @@ const quizData: {
     intermediate: prepareQuestions(triviaIntermediate),
     advanced: prepareQuestions(triviaAdvanced),
   },
-  logic: {
-    beginner: prepareQuestions(logicBeginner),
-    intermediate: prepareQuestions(logicIntermediate),
-    advanced: prepareQuestions(logicAdvanced),
+  manga: {
+    beginner: prepareQuestions(mangaBeginner),
+    intermediate: prepareQuestions(mangaIntermediate),
+    advanced: prepareQuestions(mangaAdvanced),
   },
-  literature: {
-    beginner: prepareQuestions(literatureBeginner),
-    intermediate: prepareQuestions(literatureIntermediate),
-    advanced: prepareQuestions(literatureAdvanced),
+  worldhistory: {
+    beginner: prepareQuestions(worldhistoryBeginner),
+    intermediate: prepareQuestions(worldhistoryIntermediate),
+    advanced: prepareQuestions(worldhistoryAdvanced),
   },
 };
 
