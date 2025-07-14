@@ -7,12 +7,7 @@ type Props = {
   onRestart: () => void;
 };
 
-export default function ResultScreen({
-  score,
-  total,
-  history,
-  onRestart,
-}: Props) {
+export default function ResultScreen({ score, total, onRestart }: Props) {
   useEffect(() => {
     const bgm = new Audio("/sounds/result-bgm.mp3");
     bgm.loop = true;

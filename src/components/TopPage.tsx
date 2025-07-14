@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   onStart: (genre: string, difficulty: string) => void;
@@ -7,12 +7,14 @@ type Props = {
 export default function TopPage({ onStart }: Props) {
   const [genre, setGenre] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
 
   const genres = [
     { label: "雑学", value: "trivia" },
     { label: "論理", value: "logic" },
     { label: "文学", value: "literature" },
   ];
+
   const difficulties = [
     { label: "初級", value: "beginner" },
     { label: "中級", value: "intermediate" },
@@ -20,15 +22,9 @@ export default function TopPage({ onStart }: Props) {
   ];
 
   useEffect(() => {
-    const bgm = new Audio("/sounds/top-bgm.mp3");
-    bgm.loop = true;
-    bgm.volume = 0.4;
-    bgm.play();
-
-    return () => {
-      bgm.pause();
-      bgm.currentTime = 0;
-    };
+    bgmRef.current = new Audio("/sounds/top-bgm.mp3");
+    bgmRef.current.loop = true;
+    bgmRef.current.volume = 0.4;
   }, []);
 
   const handleStart = () => {
@@ -36,6 +32,13 @@ export default function TopPage({ onStart }: Props) {
       alert("ジャンルと難易度を選んでください！");
       return;
     }
+
+    if (bgmRef.current) {
+      bgmRef.current.play().catch(() => {
+        console.warn("BGM 再生に失敗しました。");
+      });
+    }
+
     onStart(genre, difficulty);
   };
 
