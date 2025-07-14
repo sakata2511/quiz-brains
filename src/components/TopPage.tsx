@@ -25,6 +25,9 @@ export default function TopPage({ onStart }: Props) {
     bgmRef.current = new Audio("/sounds/top-bgm.mp3");
     bgmRef.current.loop = true;
     bgmRef.current.volume = 0.4;
+    bgmRef.current.play().catch(() => {
+      console.warn("BGM 自動再生はユーザー操作後に開始されます。");
+    });
   }, []);
 
   const handleStart = () => {
@@ -34,9 +37,8 @@ export default function TopPage({ onStart }: Props) {
     }
 
     if (bgmRef.current) {
-      bgmRef.current.play().catch(() => {
-        console.warn("BGM 再生に失敗しました。");
-      });
+      bgmRef.current.pause();
+      bgmRef.current.currentTime = 0;
     }
 
     onStart(genre, difficulty);
