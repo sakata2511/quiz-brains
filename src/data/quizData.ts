@@ -1,5 +1,3 @@
-// 📂 src/data/quizData.ts
-
 import triviaBeginner from "./trivia/beginner";
 import triviaIntermediate from "./trivia/intermediate";
 import triviaAdvanced from "./trivia/advanced";
@@ -18,7 +16,6 @@ type Question = {
   answer: string;
 };
 
-// 配列をシャッフルする関数
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -28,7 +25,6 @@ function shuffleArray<T>(array: T[]): T[] {
   return arr;
 }
 
-// 問題の選択肢をシャッフルして返す
 function prepareQuestions(raw: Question[]): Question[] {
   return raw.map(q => ({
     ...q,
@@ -36,7 +32,6 @@ function prepareQuestions(raw: Question[]): Question[] {
   }));
 }
 
-// エクスポートするデータ
 const quizData: {
   [genre: string]: {
     [level: string]: Question[];

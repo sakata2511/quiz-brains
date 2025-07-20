@@ -1,56 +1,110 @@
 import { useState } from "react";
+import MainTopPage from "./components/MainTopPage";
 import TopPage from "./components/TopPage";
 import QuizScreen from "./components/QuizScreen";
 import ResultScreen from "./components/ResultScreen";
+import MultiPlayIntro from "./components/MultiPlayIntro";
+import MultiPlayTopPage from "./components/MultiPlayTopPage";
+import MultiPlayScreen from "./components/MultiPlayScreen";
 
 export default function App() {
-  const [page, setPage] = useState<"top" | "quiz" | "result">("top");
+  const [page, setPage] = useState<
+    "main" | "soloTop" | "soloQuiz" | "soloResult" | "multiIntro" | "multiTop" | "multiPlay"
+  >("main");
+
   const [genre, setGenre] = useState("");
-  const [difficulty, setDifficulty] = useState("");
+  const [level, setLevel] = useState("");
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
   const [history, setHistory] = useState<{ question: string; correct: boolean }[]>([]);
+  const [selectedSet, setSelectedSet] = useState("");
+  const [players, setPlayers] = useState<string[]>([]);
 
-  const handleRestart = () => {
+  const reset = () => {
     setGenre("");
-    setDifficulty("");
+    setLevel("");
     setScore(0);
     setTotal(0);
     setHistory([]);
-    setPage("top");
+    setSelectedSet("");
+    setPlayers([]);
   };
 
   return (
     <>
-      {page === "top" && (
-        <TopPage
-          onStart={(g, d) => {
-            setGenre(g);
-            setDifficulty(d);
-            setPage("quiz");
+      {page === "main" && (
+        <MainTopPage
+          onSelectMode={(mode) => {
+            reset();
+            if (mode === "solo") {
+              setPage("soloTop");
+            } else if (mode === "multi") {
+              setPage("multiIntro");
+            }
           }}
         />
       )}
 
-      {page === "quiz" && (
+      {page === "soloTop" && (
+        <TopPage
+          onStart={(g, l) => {
+            setGenre(g);
+            setLevel(l);
+            setPage("soloQuiz");
+          }}
+          onBack={() => setPage("main")}
+        />
+      )}
+
+      {page === "soloQuiz" && (
         <QuizScreen
           genre={genre}
-          level={difficulty}
-          onFinish={(finalScore, totalQuestions, answerHistory) => {
-            setScore(finalScore);
-            setTotal(totalQuestions);
-            setHistory(answerHistory);
-            setPage("result");
+          level={level}
+          onFinish={(s, t, h) => {
+            setScore(s);
+            setTotal(t);
+            setHistory(h);
+            setPage("soloResult");
           }}
+          onBack={() => setPage("main")}
         />
       )}
 
-      {page === "result" && (
+      {page === "soloResult" && (
         <ResultScreen
           score={score}
           total={total}
           history={history}
-          onRestart={handleRestart}
+          onRestart={() => setPage("main")}
+        />
+      )}
+
+      {page === "multiIntro" && (
+        <MultiPlayIntro
+          onNext={(names) => {
+            setPlayers(names);
+            setPage("multiTop");
+          }}
+          onBack={() => setPage("main")}
+        />
+      )}
+
+      {page === "multiTop" && (
+        <MultiPlayTopPage
+          onSelectSet={(set) => {
+            setSelectedSet(set);
+            setPage("multiPlay");
+          }}
+          onBack={() => setPage("multiIntro")}
+        />
+      )}
+
+      {page === "multiPlay" && (
+        <MultiPlayScreen
+          selectedSet={selectedSet}
+          players={players}
+          onFinish={() => setPage("main")}
+          onBackToTop={() => setPage("main")} // ← 追加
         />
       )}
     </>

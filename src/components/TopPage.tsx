@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 type Props = {
   onStart: (genre: string, difficulty: string) => void;
+  onBack: () => void;
 };
 
-export default function TopPage({ onStart }: Props) {
+export default function TopPage({ onStart, onBack }: Props) {
   const [genre, setGenre] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const bgmRef = useRef<HTMLAudioElement | null>(null);
@@ -22,21 +23,17 @@ export default function TopPage({ onStart }: Props) {
   ];
 
   useEffect(() => {
-    bgmRef.current = new Audio("/sounds/top-bgm.mp3");
-    bgmRef.current.loop = true;
-    bgmRef.current.volume = 0.4;
-
-    // 再生開始
-    bgmRef.current.play().catch(() => {
+    const audio = new Audio("/sounds/top-bgm.mp3");
+    audio.loop = true;
+    audio.volume = 0.4;
+    audio.play().catch(() => {
       console.warn("BGMはユーザー操作後に開始されます");
     });
+    bgmRef.current = audio;
 
-    // クリーンアップ: TopPageがアンマウントされたら停止
     return () => {
-      if (bgmRef.current) {
-        bgmRef.current.pause();
-        bgmRef.current.currentTime = 0;
-      }
+      audio.pause();
+      audio.currentTime = 0;
     };
   }, []);
 
@@ -54,22 +51,39 @@ export default function TopPage({ onStart }: Props) {
     onStart(genre, difficulty);
   };
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 px-4">
-      <h1 className="text-5xl font-extrabold text-blue-700 mb-4">QUIZ BRAINS</h1>
-      <p className="mb-8 text-gray-700 text-center">ジャンルと難易度を選んで挑戦しよう！</p>
+  const handleBack = () => {
+    if (bgmRef.current) {
+      bgmRef.current.pause();
+      bgmRef.current.currentTime = 0;
+    }
+    onBack();
+  };
 
-      <div className="mb-6 w-full max-w-xs">
-        <h2 className="text-lg font-semibold mb-2 text-gray-800">ジャンル</h2>
-        <div className="grid grid-cols-1 gap-3">
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-600 via-blue-500 to-indigo-700 px-4 text-white relative">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-white/10 to-transparent animate-pulse"
+      style={{ pointerEvents: "none" }}
+      />
+      
+      <h1 className="text-6xl font-extrabold drop-shadow-xl animate-bounce mb-6">
+        🎮 QUIZ BRAINS
+      </h1>
+
+      <p className="mb-8 text-lg md:text-xl text-blue-100 animate-fadeIn">
+        ジャンルと難易度を選んで挑戦しよう！
+      </p>
+
+      <div className="mb-8 w-full max-w-xs">
+        <h2 className="text-xl font-bold mb-2">ジャンル</h2>
+        <div className="grid grid-cols-1 gap-4">
           {genres.map((g) => (
             <button
               key={g.value}
               onClick={() => setGenre(g.value)}
-              className={`py-3 rounded-full shadow-md transition ${
+              className={`py-3 rounded-full shadow-md transform transition-all duration-200 ${
                 genre === g.value
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-blue-600 border border-blue-300"
+                  ? "bg-pink-500 scale-105"
+                  : "bg-white text-gray-800 hover:bg-pink-200"
               }`}
             >
               {g.label}
@@ -79,16 +93,16 @@ export default function TopPage({ onStart }: Props) {
       </div>
 
       <div className="mb-8 w-full max-w-xs">
-        <h2 className="text-lg font-semibold mb-2 text-gray-800">難易度</h2>
+        <h2 className="text-xl font-bold mb-2">難易度</h2>
         <div className="grid grid-cols-3 gap-3">
           {difficulties.map((d) => (
             <button
               key={d.value}
               onClick={() => setDifficulty(d.value)}
-              className={`py-2 rounded-full shadow-sm transition ${
+              className={`py-2 rounded-full shadow-md transform transition-all duration-200 ${
                 difficulty === d.value
-                  ? "bg-green-500 text-white"
-                  : "bg-white text-green-600 border border-green-300"
+                  ? "bg-green-500 scale-105"
+                  : "bg-white text-gray-800 hover:bg-green-200"
               }`}
             >
               {d.label}
@@ -99,9 +113,17 @@ export default function TopPage({ onStart }: Props) {
 
       <button
         onClick={handleStart}
-        className="bg-purple-600 text-white px-8 py-3 rounded-full shadow-lg hover:bg-purple-700 transition"
+        className="bg-yellow-500 text-black px-8 py-3 mt-4 rounded-full shadow-xl hover:bg-yellow-400 transition-all duration-200 disabled:opacity-50"
+        disabled={!genre || !difficulty}
       >
-        クイズスタート ▶
+        🚀 クイズスタート ▶
+      </button>
+
+      <button
+        onClick={handleBack}
+        className="mt-6 text-blue-200 underline hover:text-white"
+      >
+        ⬅ メインメニューに戻る
       </button>
     </div>
   );

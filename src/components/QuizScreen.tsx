@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import quizData from "../data/quizData";
-import { timeLimits } from "../data/timeLimits";
 
 type Props = {
   genre: string;
@@ -12,192 +11,150 @@ type Props = {
   ) => void;
 };
 
-type Question = {
-  question: string;
-  choices: string[];
-  answer: string;
-};
-
-function shuffle<T>(arr: T[]): T[] {
-  const copy = [...arr];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-
-function getRandomQuestions(array: Question[], count: number) {
-  return shuffle(array).slice(0, count);
-}
-
-const playSound = (path: string) => {
-  const audio = new Audio(path);
-  audio.play();
-};
-
 export default function QuizScreen({ genre, level, onFinish }: Props) {
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<any[]>([]);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(10);
-  const [initialTime, setInitialTime] = useState(10);
   const [boom, setBoom] = useState(false);
   const [history, setHistory] = useState<{ question: string; correct: boolean }[]>([]);
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const bgm = new Audio("/sounds/quiz-bgm.mp3");
-    bgm.loop = true;
-    bgm.volume = 0.4;
-    bgm.play();
+    const q = quizData[genre]?.[level] ?? [];
+    const selected10 = q.length > 10 ? q.slice(0, 10) : q;
+    setQuestions(selected10);
+  }, [genre, level]);
+
+  useEffect(() => {
+    // BGM 再生
+    bgmRef.current = new Audio("/sounds/quiz-bgm.mp3");
+    bgmRef.current.loop = true;
+    bgmRef.current.volume = 0.4;
+
+    bgmRef.current.play().catch(() => {
+      console.warn("BGMはユーザー操作後に開始されます");
+    });
 
     return () => {
-      bgm.pause();
-      bgm.currentTime = 0;
+      if (bgmRef.current) {
+        bgmRef.current.pause();
+        bgmRef.current.currentTime = 0;
+      }
     };
   }, []);
 
   useEffect(() => {
-    const limit =
-      timeLimits[genre]?.[level] !== undefined
-        ? timeLimits[genre][level]
-        : 10;
-    setInitialTime(limit);
-    setTimeLeft(limit);
+    if (!questions.length) return;
 
-    const pool = quizData[genre]?.[level] || [];
-    const selectedQuestions =
-      pool.length <= 10 ? pool : getRandomQuestions(pool, 10);
-    setQuestions(selectedQuestions);
-  }, [genre, level]);
-
-  const question = questions[current];
-
-  useEffect(() => {
-    if (!question) return;
-
-    if (timeLeft === 0) {
+    if (timeLeft <= 0) {
       setBoom(true);
-      playSound("/sounds/wrong.mp3");
-      setTimeout(() => {
-        handleNext("");
-      }, 1500);
+      new Audio("/sounds/wrong.mp3").play();
+      setTimeout(() => nextQuestion(null), 1500);
       return;
     }
 
-    const timer = setTimeout(() => {
-      setTimeLeft((t) => t - 1);
-    }, 1000);
-
+    const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000);
     return () => clearTimeout(timer);
-  }, [timeLeft, question]);
+  }, [timeLeft, questions, current]);
+
+  const currentQ = questions[current];
 
   const handleAnswer = (choice: string) => {
-    const isCorrect = choice === question.answer;
-
+    const isCorrect = choice === currentQ.answer;
     setSelected(choice);
 
     if (isCorrect) {
       setScore((s) => s + 1);
-      playSound("/sounds/correct.mp3");
+      new Audio("/sounds/correct.mp3").play();
     } else {
-      playSound("/sounds/wrong.mp3");
+      new Audio("/sounds/wrong.mp3").play();
     }
 
-    setHistory((h) => [
-      ...h,
-      { question: question.question, correct: isCorrect },
-    ]);
-
-    setTimeout(() => {
-      handleNext(choice);
-    }, 500);
+    setHistory([...history, { question: currentQ.question, correct: isCorrect }]);
+    setTimeout(() => nextQuestion(choice), 1500);
   };
 
-  const handleNext = (choice: string) => {
+  const nextQuestion = (choice: string | null) => {
     setBoom(false);
+    setSelected(null);
     if (current < questions.length - 1) {
-      setCurrent((i) => i + 1);
-      setSelected("");
-      setTimeLeft(initialTime);
+      setCurrent(current + 1);
+      setTimeLeft(10);
     } else {
-      const isCorrect = choice === question.answer;
-      const finalHistory = [
-        ...history,
-        { question: question.question, correct: isCorrect },
-      ];
-      onFinish(
-        score + (isCorrect ? 1 : 0),
-        questions.length,
-        finalHistory
-      );
+      onFinish(score + (choice === currentQ.answer ? 1 : 0), questions.length, history);
     }
   };
 
-  if (!question) {
+  if (!currentQ) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 text-xl text-gray-600">
+      <div className="min-h-screen flex justify-center items-center text-xl text-white bg-black">
         問題を読み込み中…
       </div>
     );
   }
 
-  const fuseWidth = `${(timeLeft / initialTime) * 100}%`;
-  const fuseColor = timeLeft <= 3 ? "bg-red-500" : "bg-yellow-400";
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50 p-4 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-black to-indigo-900 text-white p-4 relative">
+      {/* 爆発演出 */}
       {boom && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 z-10">
-          <span className="text-6xl animate-ping text-red-600">💥 BOOM!</span>
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-90 z-10 text-6xl animate-ping text-red-600">
+          💥 BOOM!
         </div>
       )}
 
-      <div className="text-lg text-gray-700 mb-2">
-        {current + 1} / {questions.length}
+      <div className="mb-4 text-lg font-bold">
+        問題 {current + 1} / {questions.length}
       </div>
 
-      <h2 className="text-2xl font-semibold text-blue-800 mb-6 text-center">
-        {question.question}
-      </h2>
+      <div className="text-2xl mb-4 text-center">{currentQ.question}</div>
 
+      {/* タイマー */}
       <div className="flex items-center gap-2 mb-6">
-        <span className="text-4xl">💣</span>
-        <div className="relative w-40 h-4 bg-gray-300 rounded-full overflow-hidden">
+        <span className="text-2xl">💣</span>
+        <div className="w-48 h-4 bg-gray-700 rounded-full relative overflow-hidden">
           <div
-            className={`absolute left-0 top-0 h-full ${fuseColor} transition-all duration-1000`}
-            style={{ width: fuseWidth }}
-          ></div>
-          <span
-            className="absolute right-0 -top-2 text-xl animate-pulse"
-            style={{ right: `${100 - (timeLeft / initialTime) * 100}%` }}
-          >
-            🔥
-          </span>
+            className={`absolute top-0 left-0 h-full ${
+              timeLeft <= 3 ? "bg-red-500" : "bg-yellow-400"
+            } transition-all`}
+            style={{ width: `${(timeLeft / 10) * 100}%` }}
+          />
         </div>
+        <span className="text-lg">{timeLeft}s</span>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 w-full max-w-xs">
-        {question.choices.map((choice: string) => (
-          <button
-            key={choice}
-            onClick={() => handleAnswer(choice)}
-            disabled={!!selected || boom}
-            className={`py-2 px-4 rounded shadow text-lg transition 
-              ${
-                selected === ""
-                  ? "bg-white text-gray-800 hover:bg-blue-100"
-                  : choice === question.answer
-                  ? "bg-green-400 text-white"
-                  : choice === selected
-                  ? "bg-red-400 text-white"
-                  : "bg-white text-gray-400"
-              }`}
-          >
-            {choice}
-          </button>
-        ))}
+      {/* 選択肢 */}
+      <div className="grid gap-4 w-full max-w-md">
+        {currentQ.choices.map((c: string) => {
+          const isCorrect = c === currentQ.answer;
+          const isSelected = selected === c;
+
+          let className = "py-3 px-4 rounded-full text-lg font-semibold shadow-md transition-transform duration-200";
+
+          if (selected !== null) {
+            if (isCorrect) {
+              className += " bg-green-500 text-white scale-105";
+            } else if (isSelected) {
+              className += " bg-red-500 text-white scale-105";
+            } else {
+              className += " bg-gray-800";
+            }
+          } else {
+            className += " bg-gray-800 hover:bg-gray-700";
+          }
+
+          return (
+            <button
+              key={c}
+              onClick={() => handleAnswer(c)}
+              disabled={selected !== null || boom}
+              className={className}
+            >
+              {c}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
