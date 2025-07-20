@@ -3,40 +3,38 @@ type Props = {
   players: string[];
   onNext: () => void;
   onBack: () => void;
+  onAddPoint: (player: string) => void;
 };
 
-export default function AnswerScreen({ question, players, onNext, onBack }: Props) {
+export default function AnswerScreen({ question, players, onNext, onBack, onAddPoint }: Props) {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-purple-900 to-black text-white p-4">
-      <h2 className="text-2xl mb-4">回答</h2>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-gray-900 to-black text-white p-4">
+      <h2 className="text-xl mb-4">正解: {question.answer}</h2>
+      <p className="mb-4">{question.explanation}</p>
 
-      <div className="bg-gray-800 p-4 rounded mb-4">
-        <div><span className="text-yellow-300">正解:</span> {question.answer}</div>
-        <div className="mt-2"><span className="text-blue-300">解説:</span> {question.explanation}</div>
-      </div>
-
-      <div className="flex flex-wrap gap-2 justify-center">
-        {players.map((p) => (
+      <div className="flex flex-wrap gap-3 justify-center">
+        {players.map((player) => (
           <button
-            key={p}
-            onClick={onNext}
-            className="bg-green-400 text-black py-2 px-4 rounded"
+            key={player}
+            onClick={() => onAddPoint(player)}
+            className="bg-green-500 hover:bg-green-600 text-black px-4 py-2 rounded-full shadow"
           >
-            ✅ {p} に加算
+            ✅ {player} に加算
           </button>
         ))}
+
         <button
           onClick={onNext}
-          className="bg-yellow-400 text-black py-2 px-4 rounded"
+          className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full shadow"
         >
-          🚫 加算せず次へ
+          🚫 加算せずに次へ
         </button>
 
         <button
           onClick={onBack}
-          className="bg-gray-300 text-black py-2 px-4 rounded"
+          className="bg-gray-500 hover:bg-gray-600 text-black px-4 py-2 rounded-full shadow"
         >
-          戻る
+          ⬅ 戻る
         </button>
       </div>
     </div>

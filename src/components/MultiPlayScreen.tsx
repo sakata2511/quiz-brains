@@ -2,18 +2,21 @@ import { useState } from "react";
 import QuestionScreen from "./QuestionScreen";
 import HintsScreen from "./HintsScreen";
 import AnswerScreen from "./AnswerScreen";
+import MultiResultScreen from "./MultiResultScreen";
 import multiPlayerQuestions from "../data/multiPlayerQuestions";
 
 type Props = {
   selectedSet: string;
   players: string[];
-  onFinish: () => void;
   onBackToTop: () => void;
 };
 
-export default function MultiPlayScreen({ selectedSet, players, onFinish, onBackToTop }: Props) {
+export default function MultiPlayScreen({ selectedSet, players, onBackToTop }: Props) {
   const [current, setCurrent] = useState(0);
-  const [screen, setScreen] = useState<"question" | "hints" | "answer">("question");
+  const [screen, setScreen] = useState<"question" | "hints" | "answer" | "result">("question");
+  const [scores, setScores] = useState<Record<string, number>>(
+    Object.fromEntries(players.map(name => [name, 0]))
+  );
 
   const questions = multiPlayerQuestions[selectedSet] ?? [];
   const currentQ = questions[current];
@@ -23,9 +26,23 @@ export default function MultiPlayScreen({ selectedSet, players, onFinish, onBack
       setCurrent(current + 1);
       setScreen("question");
     } else {
-      onFinish();
+      setScreen("result");
     }
   };
+
+  const addPoint = (player: string) => {
+    setScores({ ...scores, [player]: scores[player] + 1 });
+    nextQuestion();
+  };
+
+  if (screen === "result") {
+    return (
+      <MultiResultScreen
+        scores={scores}
+        onBackToTop={onBackToTop}
+      />
+    );
+  }
 
   if (!currentQ) {
     return <div className="min-h-screen flex items-center justify-center text-white bg-black">読み込み中…</div>;
@@ -60,6 +77,7 @@ export default function MultiPlayScreen({ selectedSet, players, onFinish, onBack
         players={players}
         onNext={nextQuestion}
         onBack={() => setScreen("question")}
+        onAddPoint={addPoint}
       />
     );
   }

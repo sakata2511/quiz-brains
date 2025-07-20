@@ -102,7 +102,6 @@ export default function App() {
         <MultiPlayScreen
           selectedSet={selectedSet}
           players={players}
-          onFinish={() => setPage("main")}
           onBackToTop={() => setPage("main")} // ← 追加
         />
       )}
