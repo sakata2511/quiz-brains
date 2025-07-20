@@ -66,7 +66,6 @@ export default function App() {
             setHistory(h);
             setPage("soloResult");
           }}
-          onBack={() => setPage("main")}
         />
       )}
 
