@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect,useRef, useState } from "react";
 
 type Props = {
   onNext: (names: string[]) => void;
@@ -8,6 +8,20 @@ type Props = {
 export default function MultiPlayIntro({ onNext, onBack }: Props) {
   const [numPlayers, setNumPlayers] = useState(2);
   const [names, setNames] = useState<string[]>(["", ""]);
+
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    bgmRef.current = new Audio("/sounds/multi-bgm.mp3");
+    bgmRef.current.loop = true;
+    bgmRef.current.volume = 0.4;
+    bgmRef.current.play().catch(console.warn);
+
+    return () => {
+      bgmRef.current?.pause();
+      bgmRef.current!.currentTime = 0;
+    };
+  }, []);
 
   const handleNumChange = (n: number) => {
     setNumPlayers(n);

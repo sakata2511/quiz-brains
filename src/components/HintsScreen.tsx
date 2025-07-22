@@ -7,10 +7,12 @@ type Props = {
 
 export default function HintsScreen({ hints, onBack }: Props) {
   const [hintIndex, setHintIndex] = useState(0);
+  
 
   const nextHint = () => {
     if (hintIndex < hints.length - 1) {
       setHintIndex(hintIndex + 1);
+      new Audio("/sounds/page.mp3").play();
     } else {
       setHintIndex(0);
     }

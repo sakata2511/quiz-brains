@@ -68,7 +68,7 @@ export default function ResultScreen({ score, total, onRestart }: Props) {
         onClick={onRestart}
         className="px-6 py-3 bg-red-500 text-white rounded-full shadow hover:bg-red-600"
       >
-        もう一度挑戦する
+        トップへ戻る
       </button>
     </div>
   );

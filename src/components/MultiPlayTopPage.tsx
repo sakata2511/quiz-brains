@@ -1,9 +1,25 @@
+import { useEffect, useRef } from "react";
+
 type Props = {
   onSelectSet: (set: string) => void;
   onBack: () => void;
 };
 
 export default function MultiPlayTopPage({ onSelectSet, onBack }: Props) {
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    bgmRef.current = new Audio("/sounds/multi-bgm.mp3");
+    bgmRef.current.loop = true;
+    bgmRef.current.volume = 0.4;
+    bgmRef.current.play().catch(console.warn);
+
+    return () => {
+      bgmRef.current?.pause();
+      bgmRef.current!.currentTime = 0;
+    };
+  }, []); 
+ 
   const sets = [
     { label: "初級 1", value: "beginner-1" },
     { label: "中級 1", value: "intermediate-1" },
@@ -30,7 +46,7 @@ export default function MultiPlayTopPage({ onSelectSet, onBack }: Props) {
         onClick={onBack}
         className="mt-6 text-sm text-blue-200 underline hover:text-white"
       >
-        ⬅ メインメニューに戻る
+        ⬅ 戻る
       </button>
     </div>
   );

@@ -2,7 +2,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
   "beginner-1": [
     {
       id: "1",
-      image: "/images/b-1-1.png",
+      image: "/images/beginner/1-1.png",
       question: "歯の本数が一番多い生き物は？",
       answer: "カタツムリ",
       explanation: "カタツムリは口の中に「歯舌（しぜつ）」というヤスリ状の器官があり、1万本以上の歯があります。",
@@ -14,7 +14,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "2",
-      image: "/images/b-1-2.png",
+      image: "/images/beginner/1-2.png",
       question: "インターネット上でURLの頭につく「www」とは正式にはなんという言葉の略でしょう？",
       answer: "World Wide Web",
       explanation: "wwwはWorld Wide Webの略で、ウェブサイトを表すために使われる接頭語です。",
@@ -26,7 +26,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "3",
-      image: "/images/b-1-3.png",
+      image: "/images/beginner/1-3.png",
       question: "GReeeeNのメンバー4人がミュージシャンと並行して務める仕事は何？",
       answer: "歯医者",
       explanation: "GReeeeNのメンバーは全員が歯科医師の資格を持ち、音楽活動と両立しています。",
@@ -38,7 +38,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "4",
-      image: "/images/b-1-4.png",
+      image: "/images/beginner/1-4.png",
       question: "シュークリームの「シュー」とはフランス語である野菜を表します、その野菜とは？",
       answer: "キャベツ",
       explanation: "フランス語で「シュー」はキャベツという意味で、形が似ていることから名付けられました。",
@@ -50,7 +50,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "5",
-      image: "/images/b-1-5.png",
+      image: "/images/beginner/1-5.png",
       question: "代表作に『夜間飛行』『人間の土地』があり、パイロットとして欧州-南米間の飛行航路開拓に携わった作家は誰でしょう？",
       answer: "サンテグジュペリ",
       explanation: "『星の王子さま』の作者でもあり、作家・飛行士として活躍しました。",
@@ -62,7 +62,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "6",
-      image: "/images/b-1-6.png",
+      image: "/images/beginner/1-6.png",
       question: "葉っぱがカラスのように黒く、龍の爪のように曲がっていることから名がついた中国茶の一種は？",
       answer: "烏龍茶",
       explanation: "烏（カラス）のように黒い色と、龍の爪のような形から烏龍茶と名付けられました。",
@@ -74,7 +74,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "7",
-      image: "/images/b-1-7.png",
+      image: "/images/beginner/1-7.png",
       question: "オランダには下り坂と上り坂どっちが多いでしょうか？",
       answer: "同じ",
       explanation: "物理的に、上り坂があれば必ず下り坂があるため、数は同じです。",
@@ -86,7 +86,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "8",
-      image: "/images/b-1-8.png",
+      image: "/images/beginner/1-8.png",
       question: "上が250と、下が200と、地球上で最も血圧が高い動物はなんでしょう？",
       answer: "キリン",
       explanation: "首が長いため、脳に血液を送るために非常に高い血圧が必要です。",
@@ -98,7 +98,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "9",
-      image: "/images/b-1-9.png",
+      image: "/images/beginner/1-9.png",
       question: "冷たいものを食べると頭がキーンと痛くなる現象をなんと言うでしょう？",
       answer: "アイスクリーム頭痛",
       explanation: "冷たいものが口の中の神経を刺激し、血管が急激に収縮するためです。",
@@ -110,7 +110,7 @@ const multiPlayerQuestions: Record<string, any[]> = {
     },
     {
       id: "10",
-      image: "/images/b-1-10.png",
+      image: "/images/beginner/1-10.png",
       question: "ドイツの心理学者が提唱した、時間による記憶量の変化や忘れやすさを表したグラフを何という？",
       answer: "エビングハウスの忘却曲線",
       explanation: "記憶が時間とともにどれだけ減衰するかを示した実験結果です。",
@@ -124,65 +124,121 @@ const multiPlayerQuestions: Record<string, any[]> = {
   "intermediate-1": [
   {
     id: "1",
-    image: "/images/i-1-1.png",
-    question: "世界で最も人口が多い国は？",
-    answer: "中国",
-    explanation: "2023年時点で約14億人以上が住んでおり、世界一の人口です。",
+    image: "/images/intermediate/1-1.png",
+    question: "鏡は何色？",
+    answer: "緑色",
+    explanation: "合わせ鏡の遠くの色が緑がかって見えるので、確認してみて！",
     hints: [
-      "アジアの国です。",
-      "万里の長城があります。",
-      "北京が首都です。"
+      "透明ではありません",
+      "合わせ鏡で奥の方を見るとこの色が見えます",
+      "赤、青、緑のどれか"
     ]
   },
   {
     id: "2",
-    image: "/images/i-1-2.png",
-    question: "ピカソのフルネームのうち、最初の名前は？",
-    answer: "パブロ",
-    explanation: "ピカソの本名はパブロ・ディエゴ…と非常に長いですが、最初の名前はパブロです。",
+    image: "/images/intermediate/1-2.png",
+    question: "日本人から言う世界三大珍獣は、コビトカバ、オカピ、ともう一種類は？",
+    answer: "ジャイアントパンダ",
+    explanation: "ジャイアントパンダは草食と思われがちですが、実は雑食。",
     hints: [
-      "スペインの画家です。",
-      "キュビズムの創始者です。",
-      "青の時代があります。"
+      "かわいい見た目の動物",
+      "草食動物だと思われがちな動物",
+      "動物園の人気者。"
     ]
   },
   {
     id: "3",
-    image: "/images/i-1-3.png",
-    question: "国連の本部がある都市はどこ？",
-    answer: "ニューヨーク",
-    explanation: "国連の本部はアメリカ・ニューヨーク市にあります。",
+    image: "/images/intermediate/1-3.png",
+    question: "『アルプスの少女ハイジ』や『母をたずねて三千里』などスタジオジブリ作品を多く手掛けた監督は？",
+    answer: "高畑勲",
+    explanation: "高畑の方法論と対峙した結果として、宮崎の作品が生み出されたとして、「高畑さんがいなければ、宮崎さんはアカデミー賞を取れなかったと断言できます」と指摘されている。",
     hints: [
-      "アメリカ東海岸にあります。",
-      "自由の女神があります。",
-      "ビッグアップルとも呼ばれます。"
+      "『平成狸合戦ぽんぽこ』が有名",
+      "『フランダースの犬』が有名",
+      "『火垂るの墓』が有名。"
     ]
   },
   {
     id: "4",
-    image: "/images/i-1-4.png",
-    question: "オーストラリアの国旗に描かれている星の数は？",
-    answer: "6",
-    explanation: "オーストラリア国旗には6つの星が描かれています。",
+    image: "/images/intermediate/1-4.png",
+    question: "俗にルネサンスの三大発明といわれるものとは火薬、羅針盤とあと1つは何でしょうか？",
+    answer: "活版印刷",
+    explanation: "ルターの宗教改革が成功した大きな理由のひとつに、活版印刷技術の普及があります。",
     hints: [
-      "南半球の国です。",
-      "南十字星がヒントです。",
-      "星の数は片手＋1です。"
+      "アニメ『チ。～地球の運動について～』でも登場した道具です",
+      "この道具は、宗教改革が成功する要因になりました",
+      "現在も形を変えてコンビニなどに置かれています。"
     ]
   },
   {
     id: "5",
-    image: "/images/i-1-5.png",
-    question: "世界三大宗教のひとつは何？",
-    answer: "キリスト教",
-    explanation: "キリスト教・イスラム教・仏教が世界三大宗教とされます。",
+    image: "/images/intermediate/1-5.png",
+    question: "日本で1番小さい都道府県は香川県ですが2番目に小さい都道府県はどこでしょうか？",
+    answer: "大阪",
+    explanation: "3位は東京です",
     hints: [
-      "イエス・キリストが中心です。",
-      "十字架がシンボルです。",
-      "聖書があります。"
+      "3位は東京です",
+      "関西にあります",
+      "関西国際空港がある県です"
     ]
   },
-  // …あと5問
+    {
+    id: "6",
+    image: "/images/intermediate/1-6.png",
+    question: "マスクメロンの「マスク」とはなんという意味でしょうか？",
+    answer: "香り（ムスク）",
+    explanation: "マスクメロンの名前の由来は、麝香（じゃこう）を表す英語『musk』から名付けられた",
+    hints: [
+      "網目模様を「マスク」だと考える人もいるが、それは間違い",
+      "メロンはがん予防にも効果化のある食材"
+    ]
+  },
+    {
+    id: "7",
+    image: "/images/intermediate/1-7.png",
+    question: "元々は囲碁で意思を打つ価値の無い場所のことを指し、転じてよくないこと全般に対して使われるようになった意味は何でしょうか？",
+    answer: "駄目",
+    explanation: "",
+    hints: [
+      "目という文字が入ります。",
+      "エヴァンゲリオンのシンジ君がよく言っています",
+      "よくない状態にあることです"
+    ]
+  },
+    {
+    id: "8",
+    image: "/images/intermediate/1-8.png",
+    question: "日本の都道府県のうち、海に接していないのに漁港法が定める漁港が唯一あるのはどこでしょう？",
+    answer: "滋賀県",
+    explanation: "滋賀県の琵琶湖は、漁港法が定める漁港です",
+    hints: [
+      "近畿地方にある県",
+      "大きな湖があります"
+    ]
+  },
+    {
+    id: "9",
+    image: "/images/intermediate/1-9.png",
+    question: "チキンナゲットの「ナゲット」とは日本語でどういう意味でしょうか？",
+    answer: "金塊",
+    explanation: "チキンナゲットが黄金色にあがっている様子から、金塊をイメージしたんですね",
+    hints: [
+      "黄金色にあがっている様子を想像してみてください",
+      "もともとナゲットは塊という意味の言葉だったようです"
+    ]
+  },
+    {
+    id: "10",
+    image: "/images/intermediate/1-10.png",
+    question: "名探偵コナンにて工藤新一が黒の組織に飲まされた、身体が子供に戻ってしまう薬の名前は何でしょう？",
+    answer: "アポトキシン4869",
+    explanation: "4869はシャーロックという意味だとか",
+    hints: [
+      "アポトキシン〇〇〇〇です",
+      "〇〇〇〇には4桁の数字が入ります"
+    ]
+  },
+
 ],
 
 };

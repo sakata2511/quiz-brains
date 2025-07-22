@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef,useState } from "react";
 import QuestionScreen from "./QuestionScreen";
 import HintsScreen from "./HintsScreen";
 import AnswerScreen from "./AnswerScreen";
@@ -8,18 +8,42 @@ import multiPlayerQuestions from "../data/multiPlayerQuestions";
 type Props = {
   selectedSet: string;
   players: string[];
+  onFinish: () => void;
   onBackToTop: () => void;
 };
 
 export default function MultiPlayScreen({ selectedSet, players, onBackToTop }: Props) {
   const [current, setCurrent] = useState(0);
   const [screen, setScreen] = useState<"question" | "hints" | "answer" | "result">("question");
-  const [scores, setScores] = useState<Record<string, number>>(
-    Object.fromEntries(players.map(name => [name, 0]))
-  );
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
 
   const questions = multiPlayerQuestions[selectedSet] ?? [];
   const currentQ = questions[current];
+  
+  useEffect(() => {
+    bgmRef.current = new Audio("/sounds/quiz-bgm.mp3");
+    bgmRef.current.loop = true;
+    bgmRef.current.volume = 0.4;
+    bgmRef.current.play().catch(console.warn);
+
+    return () => {
+      bgmRef.current?.pause();
+      bgmRef.current!.currentTime = 0;
+    };
+  }, []);  
+
+  // 🎵 各問題スタート効果音は current が変わるたびに再生
+  useEffect(() => {
+    if (currentQ) {
+      const sound = new Audio("/sounds/start-question.mp3");
+      sound.play().catch(console.warn);
+    }
+  }, [currentQ]);
+  
+  
+  const [scores, setScores] = useState<Record<string, number>>(
+    Object.fromEntries(players.map(name => [name, 0]))
+  );
 
   const nextQuestion = () => {
     if (current < questions.length - 1) {

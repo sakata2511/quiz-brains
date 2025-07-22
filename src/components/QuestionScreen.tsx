@@ -19,24 +19,10 @@ export default function QuestionScreen({ question, questionNumber, totalQuestion
 
       <div className="grid grid-cols-2 gap-4">
         <button
-          onClick={onShowHints}
-          className="bg-gray-300 text-black py-2 px-4 rounded"
-        >
-          ヒント
-        </button>
-
-        <button
           onClick={() => new Audio("/sounds/correct.mp3").play()}
           className="bg-green-300 text-black py-2 px-4 rounded"
         >
           正解音
-        </button>
-
-        <button
-          onClick={onShowAnswer}
-          className="bg-gray-300 text-black py-2 px-4 rounded"
-        >
-          回答
         </button>
 
         <button
@@ -45,6 +31,21 @@ export default function QuestionScreen({ question, questionNumber, totalQuestion
         >
           不正解音
         </button>
+
+        <button
+          onClick={onShowHints}
+          className="bg-gray-300 text-black py-2 px-4 rounded"
+        >
+          ヒント
+        </button>
+
+        <button
+          onClick={onShowAnswer}
+          className="bg-gray-300 text-black py-2 px-4 rounded"
+        >
+          回答
+        </button>
+      
       </div>
 
       <button
