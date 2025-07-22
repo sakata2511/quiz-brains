@@ -8,7 +8,6 @@ import multiPlayerQuestions from "../data/multiPlayerQuestions";
 type Props = {
   selectedSet: string;
   players: string[];
-  onFinish: () => void;
   onBackToTop: () => void;
 };
 
