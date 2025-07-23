@@ -9,9 +9,10 @@ type Props = {
     total: number,
     history: { question: string; correct: boolean }[]
   ) => void;
+  onBack: () => void;
 };
 
-export default function QuizScreen({ genre, level, onFinish }: Props) {
+export default function QuizScreen({ genre, level,onBack, onFinish }: Props) {
   const [questions, setQuestions] = useState<any[]>([]);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
@@ -156,6 +157,12 @@ export default function QuizScreen({ genre, level, onFinish }: Props) {
           );
         })}
       </div>
+      <button
+        onClick={onBack}
+        className="mt-6 text-blue-200 underline hover:text-white"
+      >
+        ⬅ メニューに戻る
+      </button>
     </div>
   );
 }

@@ -70,7 +70,7 @@ export default function TopPage({ onStart, onBack }: Props) {
       </h1>
 
       <p className="mb-8 text-lg md:text-xl text-blue-100 animate-fadeIn">
-        ジャンルと難易度を選んで挑戦しよう！
+        ジャンルと難易度を選択
       </p>
 
       <div className="mb-8 w-full max-w-xs">

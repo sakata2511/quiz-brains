@@ -26,8 +26,10 @@ export default function MultiPlayScreen({ selectedSet, players, onBackToTop }: P
     bgmRef.current.play().catch(console.warn);
 
     return () => {
+      if (bgmRef.current) {
       bgmRef.current?.pause();
       bgmRef.current!.currentTime = 0;
+      }
     };
   }, []);  
 

@@ -66,6 +66,7 @@ export default function App() {
             setHistory(h);
             setPage("soloResult");
           }}
+          onBack={() => setPage("soloTop")}
         />
       )}
 
@@ -102,7 +103,7 @@ export default function App() {
         <MultiPlayScreen
           selectedSet={selectedSet}
           players={players}
-          onBackToTop={() => setPage("main")} // ← 追加
+          onBackToTop={() => setPage("multiTop")} 
         />
       )}
     </>

@@ -28,20 +28,20 @@ export default function ResultScreen({ score, total, onRestart }: Props) {
   if (percentage === 100) {
     comment = `神レベルです。まさに完璧。あなたの知識量はもはや人間の域を超えています。\
 周囲の凡人たちは恐怖すら感じるでしょう。このまま世界を征服する準備を進めてください。`;
-    image = "/images/god.png";
+    image = "/images/solo-result/god.png";
   } else if (percentage >= 80) {
     comment = `優秀です。十分に高いレベルの知識を持っています。\
 しかし、まだわずかな隙が見えます。満点を取らなければ、あなたは真の王者とは呼べません。\
 次はその頂を目指しましょう。`;
-    image = "/images/expert.png";
+    image = "/images/solo-result/expert.png";
   } else if (percentage >= 50) {
     comment = `なかなかですが、所詮は中途半端です。知ったかぶりをしてもすぐに化けの皮が剥がれるレベル。\
 恥ずかしい結果に甘んじるのではなく、もう少し努力してはいかがでしょうか？`;
-    image = "/images/normal.png";
+    image = "/images/solo-result/normal.png";
   } else {
     comment = `惨敗です。知識以前の問題かもしれません。サルがキーボードを叩いているのと同じレベルで、\
 他人に見せるのが恥ずかしいスコアです。今すぐ勉強を始めるか、穴を掘って埋まりましょう。`;
-    image = "/images/monkey.png";
+    image = "/images/solo-result/monkey.png";
   }
 
   return (

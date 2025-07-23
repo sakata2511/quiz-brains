@@ -14,7 +14,7 @@ export default function QuestionScreen({ question, questionNumber, totalQuestion
         問題 {questionNumber} / {totalQuestions}
       </div>
 
-      <img src={question.image} alt="question" className="w-32 h-32 mb-4" />
+      <img src={question.image} alt="question" className="w-40 h-40 mb-4" />
       <div className="text-xl mb-6">{question.question}</div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -52,7 +52,7 @@ export default function QuestionScreen({ question, questionNumber, totalQuestion
         onClick={onBackToTop}
         className="mt-6 text-blue-300 underline"
       >
-        ⬅ トップへ戻る
+        ⬅ 選択画面へ戻る
       </button>
     </div>
   );

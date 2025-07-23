@@ -19,7 +19,7 @@ export default function AnswerScreen({ question, players, onNext, onBack, onAddP
             onClick={() => onAddPoint(player)}
             className="bg-green-500 hover:bg-green-600 text-black px-4 py-2 rounded-full shadow"
           >
-            ✅ {player} に加算
+            ✅ {player} に得点
           </button>
         ))}
 
@@ -27,7 +27,7 @@ export default function AnswerScreen({ question, players, onNext, onBack, onAddP
           onClick={onNext}
           className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full shadow"
         >
-          🚫 加算せずに次へ
+          🚫 次へ
         </button>
 
         <button

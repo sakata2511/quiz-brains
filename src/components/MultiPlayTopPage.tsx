@@ -21,14 +21,18 @@ export default function MultiPlayTopPage({ onSelectSet, onBack }: Props) {
   }, []); 
  
   const sets = [
-    { label: "初級 1", value: "beginner-1" },
-    { label: "中級 1", value: "intermediate-1" },
-    { label: "上級 1", value: "advanced-1" },
+    { label: "初級（1-1）", value: "beginner-1" },
+    { label: "中級（2-1）", value: "intermediate-1" },
+    { label: "上級（3-1）", value: "advanced-1" },
   ];
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-700 text-white p-4">
-      <h1 className="text-4xl font-bold mb-8">🎮 みんなでモード </h1>
+      <h1 className="text-6xl font-extrabold drop-shadow-xl animate-bounce mb-6">🎮 みんなでモード </h1>
+
+      <p className="mb-8 text-lg md:text-xl text-blue-100 animate-fadeIn">
+        難易度を選択
+      </p>
 
       <div className="grid grid-cols-1 gap-4 w-full max-w-sm">
         {sets.map((set) => (

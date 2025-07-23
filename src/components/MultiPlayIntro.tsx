@@ -46,10 +46,10 @@ export default function MultiPlayIntro({ onNext, onBack }: Props) {
         style={{ pointerEvents: "none" }}
       />
 
-      <h1 className="text-4xl font-bold mb-8">🎮 みんなでモード </h1>
+      <h1 className="text-6xl font-extrabold drop-shadow-xl animate-bounce mb-6">🎮 みんなでモード </h1>
 
       <p className="mb-4 text-center text-blue-100 text-lg">
-        誰が一番正解できるか！バトル！
+        参加メンバーを入力
       </p>
 
       <p className="mb-6 text-center text-sm text-blue-200">
